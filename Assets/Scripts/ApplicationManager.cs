@@ -60,7 +60,7 @@ public class ApplicationManager : MonoBehaviour
         opponents = new ArrayList();
         roundOrder = new ArrayList();
         playerHasAdvantage = true;
-        round = 5;
+        round = 1;
 	}
 	
 	void Update()
@@ -72,7 +72,45 @@ public class ApplicationManager : MonoBehaviour
     {
         roundOrder.Clear();
 
-        // Need a sorting algorithm for initiative
+        int[] ids = new int[round + 1];
+        float[] initiatives = new float[round + 1];
+
+        ids[0] = player.id;
+        initiatives[0] = player.getInitiative();
+
+        foreach( Opponent opponent in opponents )
+        {
+            ids[opponent.id] = opponent.id;
+            initiatives[opponent.id] = opponent.getInitiative();
+        }
+
+        int tempId = 0;
+        float tempInitiative = 0;
+
+        for( int i = round; i > -1; i -- )
+        {
+            for( int j = round - 1; j > -1; j -- )
+            {
+                if( initiatives[j + 1] < initiatives[j] )
+                {
+                    tempId = ids[j + 1];
+                    ids[j + 1] = ids[j];
+                    ids[j] = tempId;
+
+                    tempInitiative = initiatives[j + 1];
+                    initiatives[j + 1] = initiatives[j];
+                    initiatives[j] = tempInitiative;
+                }
+            }
+        }
+
+        for( int i = 0; i <= round; i ++ )
+        {
+            roundOrder.Insert( i, ids[i] );
+            Debug.Log( " Combatant id " + ids[i] + " is #" + i + " in round with " + initiatives[i] + " initiative" );
+        }
+
+        roundOrder.Reverse();
     }
 
     void determineTacticalAdvantage()
