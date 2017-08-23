@@ -1,0 +1,107 @@
+Initialize engine version: 2017.1.0f3 (472613c02cf7)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.0]
+    Renderer: AMD Radeon HD 5800 Series (ID=0x689e)
+    Vendor:   ATI
+    VRAM:     1010 MB
+    Driver:   15.200.1062.1004
+Begin MonoManager ReloadAssembly
+Platform assembly: E:\projects\unity\Caveman-Tactics\Start_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading E:\projects\unity\Caveman-Tactics\Start_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: E:\projects\unity\Caveman-Tactics\Start_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading E:\projects\unity\Caveman-Tactics\Start_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: E:\projects\unity\Caveman-Tactics\Start_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading E:\projects\unity\Caveman-Tactics\Start_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: E:\projects\unity\Caveman-Tactics\Start_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading E:\projects\unity\Caveman-Tactics\Start_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+Platform assembly: E:\projects\unity\Caveman-Tactics\Start_Data\Managed\UnityEngine.Timeline.dll (this message is harmless)
+Loading E:\projects\unity\Caveman-Tactics\Start_Data\Managed\UnityEngine.Timeline.dll into Unity Child Domain
+Platform assembly: E:\projects\unity\Caveman-Tactics\Start_Data\Managed\System.dll (this message is harmless)
+Platform assembly: E:\projects\unity\Caveman-Tactics\Start_Data\Managed\System.Core.dll (this message is harmless)
+- Completed reload, in  0.024 seconds
+<RI> Initializing input.
+<RI> Input initialized.
+<RI> Initialized touch support.
+UnloadTime: 1.587285 ms
+Setting up 2 worker threads for Enlighten.
+  Thread -> id: 76c -> priority: 1 
+  Thread -> id: 172c -> priority: 1 
+Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.436122 ms
+
+Unloading 7 unused Assets to reduce memory usage. Loaded Objects now: 327.
+Total: 0.274482 ms (FindLiveObjects: 0.029389 ms CreateObjectMapping: 0.013308 ms MarkObjects: 0.206000 ms  DeleteObjects: 0.024675 ms)
+
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 6.916682 ms
+
+Unloading 3 unused Assets to reduce memory usage. Loaded Objects now: 392.
+Total: 0.390097 ms (FindLiveObjects: 0.039092 ms CreateObjectMapping: 0.016358 ms MarkObjects: 0.322447 ms  DeleteObjects: 0.011090 ms)
+
+Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.556173 ms
+
+Unloading 3 unused Assets to reduce memory usage. Loaded Objects now: 496.
+Total: 0.673175 ms (FindLiveObjects: 0.051014 ms CreateObjectMapping: 0.021071 ms MarkObjects: 0.584730 ms  DeleteObjects: 0.014971 ms)
+
+Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 1.680997 ms
+
+Unloading 5 unused Assets to reduce memory usage. Loaded Objects now: 702.
+Total: 0.766333 ms (FindLiveObjects: 0.094543 ms CreateObjectMapping: 0.035211 ms MarkObjects: 0.606356 ms  DeleteObjects: 0.028280 ms)
+
+Player token placed at (1.6, 0.0, 0.0)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Player token placed at (-0.6, 1.2, 0.0)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Player token placed at (3.0, 2.5, 0.0)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Player token placed at (2.3, -1.2, 0.0)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Player token placed at (-0.6, -1.2, 0.0)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Player token placed at (4.4, 2.5, 0.0)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Player token placed at (0.8, -1.2, 0.0)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Player token placed at (3.0, -2.5, 0.0)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Player token placed at (1.6, 0.0, 0.0)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Player token placed at (0.8, -1.2, 0.0)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Player token placed at (-2.0, -3.7, 0.0)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Player token placed at (6.5, -3.7, 0.0)
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 1.339696 ms
+
+Unloading 6 unused Assets to reduce memory usage. Loaded Objects now: 441.
+Total: 0.663748 ms (FindLiveObjects: 0.064045 ms CreateObjectMapping: 0.030220 ms MarkObjects: 0.542310 ms  DeleteObjects: 0.026061 ms)
+
