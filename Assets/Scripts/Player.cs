@@ -15,6 +15,7 @@ public class Player
     public int unspentPoints;
     public int statMax;
     public Constants.Weapon weapon;
+    public Renderer token;
     public Transform transform;
 
     [HideInInspector]

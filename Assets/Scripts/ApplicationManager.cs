@@ -12,6 +12,8 @@ public class ApplicationManager : MonoBehaviour
     public Constants.AppState resumeState = Constants.AppState.MainMenu;
     public bool musicOn = true;
     public bool sfxOn = true;
+    public GameObject playerToken;
+    public GameObject opponentToken;
     public int opponentStartingPoints = 10;
     public int playerStartingPoints = 10;
     public int statDefaultValue = 10;
@@ -22,13 +24,22 @@ public class ApplicationManager : MonoBehaviour
     public bool playerHasAdvantage;
 
     [HideInInspector]
+    public GameObject hexGrid;
+
+    [HideInInspector]
     public int round;
 
     [HideInInspector]
     public Player player;
 
     [HideInInspector]
+    public ArrayList hexagons;
+
+    [HideInInspector]
     public ArrayList opponents;
+
+    [HideInInspector]
+    public ArrayList tokens;
 
     [HideInInspector]
     public ArrayList roundOrder;
@@ -67,6 +78,23 @@ public class ApplicationManager : MonoBehaviour
     {
         // TODO
 	}
+
+    void createTokens()
+    {
+        tokens = new ArrayList();
+
+        tokens.Insert( player.id, Instantiate<GameObject>( playerToken ).gameObject );
+
+        foreach( Opponent opponent in opponents )
+        {
+            tokens.Insert( opponent.id, Instantiate<GameObject>( opponentToken ).gameObject );
+        }
+
+        foreach( GameObject token in tokens )
+        {
+            token.SetActive( false );
+        }
+    }
 
     void determineInitiative()
     {
@@ -107,7 +135,6 @@ public class ApplicationManager : MonoBehaviour
         for( int i = 0; i <= round; i ++ )
         {
             roundOrder.Insert( i, ids[i] );
-            Debug.Log( " Combatant id " + ids[i] + " is #" + i + " in round with " + initiatives[i] + " initiative" );
         }
 
         roundOrder.Reverse();
@@ -119,7 +146,7 @@ public class ApplicationManager : MonoBehaviour
 
         int playerResult = statCheck( player.brains );
 
-        foreach( Player opponent in opponents )
+        foreach( Opponent opponent in opponents )
         {
             if( statCheck( opponent.brains ) > playerResult )
             {
@@ -135,7 +162,7 @@ public class ApplicationManager : MonoBehaviour
 
         for( int i = 0; i < round; i ++ )
         {
-            opponents.Add( new Opponent( statDefaultValue, statMinValue, statMaxValue, opponentStartingPoints, i + 1 ) );
+            opponents.Insert( i, new Opponent( statDefaultValue, statMinValue, statMaxValue, opponentStartingPoints, i + 1 ) );
         }
     }
 
@@ -149,10 +176,72 @@ public class ApplicationManager : MonoBehaviour
         return ( die1 + die2 );
     }
 
+    void placeOpponents()
+    {
+        if( playerHasAdvantage )
+        {
+            foreach( Opponent opponent in opponents )
+            {
+                switch( opponent.tacticalStance )
+                {
+                    case Constants.TacticalStance.Aggressive:
+                        // Place adjacent to player
+                        break;
+                    case Constants.TacticalStance.Balanced:
+                        // Place 2 - 3 hexes from player
+                        break;
+                    case Constants.TacticalStance.Defensive:
+                        // Place 4+ hexes from player
+                        break;
+                }
+            }
+        }
+        else
+        {
+            foreach( Opponent opponent in opponents )
+            {
+                switch( opponent.tacticalStance )
+                {
+                    case Constants.TacticalStance.Aggressive:
+                        // Place in center area of grid
+                        break;
+                    case Constants.TacticalStance.Balanced:
+                        // Place in random hex
+                        break;
+                    case Constants.TacticalStance.Defensive:
+                        // Place in outer hex
+                        break;
+                }
+            }
+        }
+    }
+
+    void placeTokens()
+    {
+        if( playerHasAdvantage )
+        {
+            placeOpponents();
+            unlockHexGrid();
+        }
+        else
+        {
+            unlockHexGrid();
+            placeOpponents();
+        }
+    }
+
     int statCheck( int statValue )
     {
         // Success is defined as a "roll" that is less than or equal to the stat
         return ( statValue - getDiceRoll() );
+    }
+
+    void unlockHexGrid()
+    {
+        foreach( Hexagon hexagon in hexagons )
+        {
+            hexagon.isSelectable = true;
+        }
     }
 
     public void changeScreen()
@@ -176,6 +265,8 @@ public class ApplicationManager : MonoBehaviour
                 generateOpponents();
                 determineTacticalAdvantage();
                 determineInitiative();
+                createTokens();
+                placeTokens();
                 break;
             case Constants.AppState.PlayerTurn:
                 break;
@@ -192,6 +283,22 @@ public class ApplicationManager : MonoBehaviour
     public void exitGame()
     {
         Application.Quit();
+    }
+
+    public void initializeHexGrid( ref GameObject hexGrid )
+    {
+        hexagons = new ArrayList( hexGrid.GetComponentsInChildren( typeof(Hexagon) ) );
+    }
+
+    public void placePlayerToken( Vector3 position )
+    {
+        GameObject token = ( GameObject ) tokens[player.id];
+
+        token.SetActive( true );
+
+        token.transform.position = position;
+
+        Debug.Log( "Player token placed at " + position );
     }
 
     public void toggleMusic( bool musicState )
@@ -214,7 +321,5 @@ public class ApplicationManager : MonoBehaviour
     public void toggleSfx( bool sfxState )
     {
         sfxOn = sfxState;
-        Debug.Log( sfxState.ToString() );
-        Debug.Log( sfxOn.ToString() );
     }
 }

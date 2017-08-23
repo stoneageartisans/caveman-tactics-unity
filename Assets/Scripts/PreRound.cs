@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class PreRound : MonoBehaviour
 {
+    public GameObject hexGrid;
     public Text actionPoints;
     public Text agility;
     public Text brains;
@@ -29,8 +30,8 @@ public class PreRound : MonoBehaviour
         damage.text = ( ApplicationManager.instance.player.getDamageMin() + " - " + ApplicationManager.instance.player.getDamageMax() );
         unspentPoints.text = ApplicationManager.instance.player.unspentPoints.ToString();
 
+        ApplicationManager.instance.initializeHexGrid( ref hexGrid );
         ApplicationManager.instance.checkAppState();
-        placeTokens();
 	}
 	
 	void Update()
@@ -54,20 +55,6 @@ public class PreRound : MonoBehaviour
             " / " +
             ApplicationManager.instance.player.getHitPoints().ToString()
         );
-    }
-
-    void placeTokens()
-    {
-        if( ApplicationManager.instance.playerHasAdvantage )
-        {
-            // Place opponent token(s) based on tacticalStance
-            // Then show floating text and player token for placement
-        }
-        else
-        {
-            // Show floating text and player token for placement
-            // Then place opponent token(s) based on tacticalStance
-        }
     }
 
     public void characterButtonClicked()

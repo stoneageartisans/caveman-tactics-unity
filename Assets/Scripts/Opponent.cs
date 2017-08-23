@@ -114,6 +114,7 @@ public class Opponent : Player
 
         calculateStats();
 
+        /*
         Debug.Log( "Brawn: " + brawn );
         Debug.Log( "Agility: " + agility );
         Debug.Log( "Brains: " + brains );
@@ -126,6 +127,7 @@ public class Opponent : Player
         Debug.Log( "Weapon: " + weapon.ToString() );
         Debug.Log( "Unspent Points: " + unspentPoints );
         Debug.Log( "Tactical Stance: " + tacticalStance.ToString() );
+        */
     }
 
     void decreaseStat( ref int stat )
