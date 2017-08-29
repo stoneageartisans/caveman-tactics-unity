@@ -16,7 +16,15 @@ public class Player
     public int statMax;
     public Constants.Weapon weapon;
     public Renderer token;
-    public Transform transform;
+
+    [HideInInspector]
+    public int facing;
+
+    [HideInInspector]
+    public string currrentHexId;
+
+    [HideInInspector]
+    public string previousHexId;
 
     [HideInInspector]
     public int id;
@@ -46,6 +54,10 @@ public class Player
         weapon = Constants.Weapon.Hands;
         wounds = 0;
         calculateStats();
+
+        facing = Constants.EAST;
+        currrentHexId = null;
+        previousHexId = null;
     }
 
     public void calculateStats()

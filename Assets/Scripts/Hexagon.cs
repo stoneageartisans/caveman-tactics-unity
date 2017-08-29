@@ -62,16 +62,35 @@ public class Hexagon : MonoBehaviour
             {
                 if( !isOccupied )
                 {
-                    ApplicationManager.instance.placePlayerToken( gameObject.transform.position );
+                    ApplicationManager.instance.placePlayerToken( gameObject.transform.position, id );
+                    isOccupied = true;
                 }
             }
+
+            if( Input.GetMouseButtonDown( 1 ) )
+            {
+                int direction = ApplicationManager.instance.player.facing;
+
+                direction ++;
+
+                if( direction == Constants.MAX_DIRECTIONS )
+                {
+                    direction = Constants.EAST;
+                }
+
+                ApplicationManager.instance.rotatePlayer( direction );
+            }
         }
+
+    }
+
+    void Awake()
+    {
+        id = ( column + "," + row );
     }
 
 	void Start()
     {
-        id = column + ", " + row;
-
         currentMaterial = gameObject.GetComponent<Renderer>().material;
 	}
 	
@@ -79,4 +98,32 @@ public class Hexagon : MonoBehaviour
     {
         // TODO
 	}
+
+    int getDirection( float angle )
+    {
+        if( angle > 30 && angle <= 90 )
+        {
+            return Constants.SOUTHEAST;
+        }
+        else if( angle > 90 && angle <= 150 )
+        {
+            return Constants.SOUTHEAST;
+        }
+        else if( angle > 150 && angle <= 210 )
+        {
+            return Constants.SOUTHEAST;
+        }
+        else if( angle > 150 && angle <= 210 )
+        {
+            return Constants.SOUTHEAST;
+        }
+        else if( angle > 150 && angle <= 210 )
+        {
+            return Constants.SOUTHEAST;
+        }
+        else
+        {
+            return Constants.EAST;
+        }
+    }
 }

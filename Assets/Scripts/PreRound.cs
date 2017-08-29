@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class PreRound : MonoBehaviour
 {
     public GameObject hexGrid;
+    public GameObject instructionDialog;
     public Text actionPoints;
     public Text agility;
     public Text brains;
@@ -16,6 +17,8 @@ public class PreRound : MonoBehaviour
     public Text stamina;
     public Text unspentPoints;
     public Text weapon;
+
+    bool dialogShowing;
 
 	void Start()
     {
@@ -32,11 +35,19 @@ public class PreRound : MonoBehaviour
 
         ApplicationManager.instance.initializeHexGrid( ref hexGrid );
         ApplicationManager.instance.checkAppState();
+
+        showInstructionDialog();
 	}
 	
 	void Update()
     {
-		// TODO
+        if( dialogShowing )
+        {
+            if( Input.anyKeyDown )
+            {
+                hideInstructionDialog();
+            }
+        }
 	}
 
     string formatActionPoints()
@@ -55,6 +66,20 @@ public class PreRound : MonoBehaviour
             " / " +
             ApplicationManager.instance.player.getHitPoints().ToString()
         );
+    }
+
+    void hideInstructionDialog()
+    {
+        instructionDialog.SetActive( false );
+
+        dialogShowing = false;
+    }
+
+    void showInstructionDialog()
+    {
+        instructionDialog.SetActive( true );
+
+        dialogShowing = true;
     }
 
     public void characterButtonClicked()

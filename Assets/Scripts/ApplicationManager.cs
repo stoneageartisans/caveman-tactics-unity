@@ -33,7 +33,7 @@ public class ApplicationManager : MonoBehaviour
     public Player player;
 
     [HideInInspector]
-    public ArrayList hexagons;
+    public Dictionary<string, Hexagon> hexagons;
 
     [HideInInspector]
     public ArrayList opponents;
@@ -238,7 +238,7 @@ public class ApplicationManager : MonoBehaviour
 
     void unlockHexGrid()
     {
-        foreach( Hexagon hexagon in hexagons )
+        foreach( Hexagon hexagon in hexagons.Values )
         {
             hexagon.isSelectable = true;
         }
@@ -287,18 +287,31 @@ public class ApplicationManager : MonoBehaviour
 
     public void initializeHexGrid( ref GameObject hexGrid )
     {
-        hexagons = new ArrayList( hexGrid.GetComponentsInChildren( typeof(Hexagon) ) );
+        hexagons = new Dictionary<string, Hexagon>();
+
+        Component[] hexArray = hexGrid.GetComponentsInChildren( typeof( Hexagon ) );
+
+        foreach( Hexagon hexagon in hexArray )
+        {
+            hexagons.Add( hexagon.id, hexagon );
+        }
     }
 
-    public void placePlayerToken( Vector3 position )
+    public void placePlayerToken( Vector3 position, string hexId )
     {
         GameObject token = ( GameObject ) tokens[player.id];
-
         token.SetActive( true );
-
         token.transform.position = position;
 
-        Debug.Log( "Player token placed at " + position );
+        player.currrentHexId = hexId;
+        player.previousHexId = hexId;
+    }
+
+    public void rotatePlayer( int direction )
+    {
+        player.facing = direction;
+
+        ( ( GameObject ) tokens[player.id] ).transform.rotation = Constants.FACING[player.facing];
     }
 
     public void toggleMusic( bool musicState )
