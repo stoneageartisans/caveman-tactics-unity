@@ -16,6 +16,13 @@ public static class Constants
         PostRound,
         Exiting
     };
+    
+    public enum HexOverlay
+    {
+        Blank,
+        Highlighted,
+        Obstructed
+    };
 
     public enum TacticalStance
     {

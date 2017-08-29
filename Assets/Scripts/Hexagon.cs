@@ -12,7 +12,7 @@ public class Hexagon : MonoBehaviour
     public Texture obstructed;
 
     Material currentMaterial;
-
+    
     [HideInInspector]
     public bool isSelectable = false;
 
@@ -30,28 +30,12 @@ public class Hexagon : MonoBehaviour
 
     void OnMouseEnter()
     {
-        /*if( isSelectable )
-        {
-            if( !isObstructed && !isOccupied )
-            {
-                isHighlighted = true;
-
-                currentMaterial.SetTexture( "_MainTex", highlighted ); 
-            }
-        }*/
+        // TODO
     }
 
     void OnMouseExit()
     {
-        /*if( isSelectable )
-        {
-            if( isHighlighted )
-            {
-                isHighlighted = false;
-
-                currentMaterial.SetTexture( "_MainTex", blank ); 
-            }
-        }*/
+        // TODO
     }
 
     void OnMouseOver()
@@ -63,7 +47,6 @@ public class Hexagon : MonoBehaviour
                 if( !isOccupied )
                 {
                     ApplicationManager.instance.placePlayerToken( gameObject.transform.position, id );
-                    isOccupied = true;
                 }
             }
 
@@ -78,7 +61,7 @@ public class Hexagon : MonoBehaviour
                     direction = Constants.EAST;
                 }
 
-                ApplicationManager.instance.rotatePlayer( direction );
+                ApplicationManager.instance.rotatePlayerToken( direction );
             }
         }
 
@@ -124,6 +107,25 @@ public class Hexagon : MonoBehaviour
         else
         {
             return Constants.EAST;
+        }
+    }
+    
+    public void setOverlay( Constants.HexOverlay overlay )
+    {
+        swtich( overlay )
+        {
+            case Constants.HexOverlay.Blank:
+                currentMaterial.SetTexture( "_MainTex", blank );
+                break;
+            case Constants.HexOverlay.Highlighted:
+                currentMaterial.SetTexture( "_MainTex", highlighted );
+                break;
+            case Constants.HexOverlay.Obstructed:
+                currentMaterial.SetTexture( "_MainTex", obstructed );
+                break;
+            default:
+                currentMaterial.SetTexture( "_MainTex", blank );
+                break;
         }
     }
 }

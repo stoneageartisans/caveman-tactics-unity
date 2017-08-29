@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Player
 {
+    public Constants.Weapon weapon;
     public int agility;
     public int agilityMin;
     public int brains;
@@ -13,21 +14,20 @@ public class Player
     public int stamina;
     public int staminaMin;
     public int unspentPoints;
-    public int statMax;
-    public Constants.Weapon weapon;
+    public int statMax;    
     public Renderer token;
 
     [HideInInspector]
     public int facing;
+    
+    [HideInInspector]
+    public int id;
 
     [HideInInspector]
     public string currrentHexId;
 
     [HideInInspector]
     public string previousHexId;
-
-    [HideInInspector]
-    public int id;
 
     float initiative;
     int action;
@@ -53,6 +53,7 @@ public class Player
         statMax = statMaxValue;
         weapon = Constants.Weapon.Hands;
         wounds = 0;
+        
         calculateStats();
 
         facing = Constants.EAST;
