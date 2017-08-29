@@ -21,7 +21,19 @@ public class ApplicationManager : MonoBehaviour
     public int statMinValue = 5;
 
     [HideInInspector]
+    public ArrayList opponents;
+
+    [HideInInspector]
+    public ArrayList tokens;
+
+    [HideInInspector]
+    public ArrayList roundOrder;
+    
+    [HideInInspector]
     public bool playerHasAdvantage;
+    
+    [HideInInspector]
+    public Dictionary<string, Hexagon> hexagons;
 
     [HideInInspector]
     public GameObject hexGrid;
@@ -31,18 +43,6 @@ public class ApplicationManager : MonoBehaviour
 
     [HideInInspector]
     public Player player;
-
-    [HideInInspector]
-    public Dictionary<string, Hexagon> hexagons;
-
-    [HideInInspector]
-    public ArrayList opponents;
-
-    [HideInInspector]
-    public ArrayList tokens;
-
-    [HideInInspector]
-    public ArrayList roundOrder;
 
     void Awake()
     {
@@ -78,6 +78,20 @@ public class ApplicationManager : MonoBehaviour
     {
         // TODO
 	}
+    
+    void clearHex( string hexId )
+    {
+        if( hexId != null )
+        {
+            ( hexagons[hexId] ).isObstructed = false;
+            ( hexagons[hexId] ).isOccupied = false;
+            ( hexagons[hexId] ).setOverlay( Constants.HexOverlay.Blank );
+        }
+        else
+        {
+            // log debug message
+        }
+    }
 
     void createTokens()
     {
@@ -296,6 +310,31 @@ public class ApplicationManager : MonoBehaviour
             hexagons.Add( hexagon.id, hexagon );
         }
     }
+    
+    public void obstructHex( string hexId )
+    {
+        if( hexId != null )
+        {
+            ( hexagons[hexId] ).isObstructed = true;
+            ( hexagons[hexId] ).setOverlay( Constants.HexOverlay.Obstructed );
+        }
+        else
+        {
+            // log debug message
+        }
+    }
+    
+    public void occupyHex( string hexId )
+    {
+        if( hexId != null )
+        {
+            ( hexagons[hexId] ).isOccupied = true;
+        }
+        else
+        {
+            // log debug message
+        }
+    }
 
     public void placePlayerToken( Vector3 position, string hexId )
     {
@@ -303,11 +342,14 @@ public class ApplicationManager : MonoBehaviour
         token.SetActive( true );
         token.transform.position = position;
 
+        clearHex( player.currrentHexId );
+        player.previousHexId = player.currrentHexId;
+        
+        occupyHex( hexId );
         player.currrentHexId = hexId;
-        player.previousHexId = hexId;
     }
 
-    public void rotatePlayer( int direction )
+    public void rotatePlayerToken( int direction )
     {
         player.facing = direction;
 
