@@ -112,7 +112,7 @@ public class Hexagon : MonoBehaviour
     
     public void setOverlay( Constants.HexOverlay overlay )
     {
-        swtich( overlay )
+        switch( overlay )
         {
             case Constants.HexOverlay.Blank:
                 currentMaterial.SetTexture( "_MainTex", blank );

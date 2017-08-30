@@ -16,7 +16,7 @@ public static class Constants
         PostRound,
         Exiting
     };
-    
+
     public enum HexOverlay
     {
         Blank,
@@ -56,4 +56,6 @@ public static class Constants
         Quaternion.Euler( 0, 0, 120 ),
         Quaternion.Euler( 0, 0,  60 )
     };
+
+    public const float HEX_SPACING = 1.45F; // True spacing is 1.425, but it was rounded to avoid misses
 }

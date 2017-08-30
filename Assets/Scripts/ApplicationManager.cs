@@ -170,6 +170,44 @@ public class ApplicationManager : MonoBehaviour
         }
     }
 
+    List<string> getHexRangeGroupIds( string hexId, int hexDistance, bool insideRange = true )
+    {
+        List<string> idList = new List<string>();
+
+        float range = ( float ) hexDistance * Constants.HEX_SPACING;
+
+        Vector3 hexPosition = ( hexagons[hexId] ).transform.position;
+
+        foreach( Hexagon hexagon in hexagons.Values )
+        {
+            if( insideRange )
+            { 
+                if( Vector3.Distance( hexPosition, hexagon.transform.position ) < range )
+                {
+                    if( !hexagon.id.Equals( hexId ) )
+                    {
+                        idList.Add( hexagon.id );
+                    }
+                }
+            }
+            else
+            {
+                if( Vector3.Distance( hexPosition, hexagon.transform.position ) > range )
+                {
+                    idList.Add( hexagon.id );
+                }
+            }
+        }
+
+        // Debugging
+        /*foreach( string id in idList )
+        {
+            Debug.Log( "Hex with id == " + id + " is within " + hexDistance + " hexes of Hexagon " + hexId );
+        }*/
+
+        return idList;
+    }
+
     void generateOpponents()
     {
         opponents.Clear();
@@ -310,6 +348,35 @@ public class ApplicationManager : MonoBehaviour
             hexagons.Add( hexagon.id, hexagon );
         }
     }
+
+    public void highlightHex( string hexId )
+    {
+        if( hexId != null )
+        {
+            ( hexagons[hexId] ).isHighlighted = true;
+            ( hexagons[hexId] ).setOverlay( Constants.HexOverlay.Highlighted );
+        }
+        else
+        {
+            // log debug message
+        }
+    }
+
+    public void highlightHexes( List<string> hexIdList )
+    {
+        foreach( string hexId in hexIdList )
+        {
+            if( hexId != null )
+            {
+                ( hexagons[hexId] ).isHighlighted = true;
+                ( hexagons[hexId] ).setOverlay( Constants.HexOverlay.Highlighted );
+            }
+            else
+            {
+                // log debug message
+            }
+        }
+    }
     
     public void obstructHex( string hexId )
     {
@@ -347,6 +414,9 @@ public class ApplicationManager : MonoBehaviour
         
         occupyHex( hexId );
         player.currrentHexId = hexId;
+
+        // Testing
+        highlightHexes( getHexRangeGroupIds( hexId, 1, false ) );
     }
 
     public void rotatePlayerToken( int direction )
