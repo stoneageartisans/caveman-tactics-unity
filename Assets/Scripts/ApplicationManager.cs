@@ -93,6 +93,23 @@ public class ApplicationManager : MonoBehaviour
         }
     }
 
+    void clearHexes( List<string> hexIdList )
+    {
+        foreach( string hexId in hexIdList )
+        {
+            if( hexId != null )
+            {
+                ( hexagons[hexId] ).isObstructed = false;
+                ( hexagons[hexId] ).isOccupied = false;
+                ( hexagons[hexId] ).setOverlay( Constants.HexOverlay.Blank );
+            }
+            else
+            {
+                // log debug message
+            }
+        }
+    }
+
     void createTokens()
     {
         tokens = new ArrayList();
@@ -170,31 +187,34 @@ public class ApplicationManager : MonoBehaviour
         }
     }
 
-    List<string> getHexRangeGroupIds( string hexId, int hexDistance, bool insideRange = true )
+    List<string> getAvailableHexIds( string hexId, int hexDistance, bool insideRange = true )
     {
         List<string> idList = new List<string>();
 
-        float range = ( float ) hexDistance * Constants.HEX_SPACING;
+        float distance = ( float ) hexDistance * Constants.HEX_SPACING;
 
         Vector3 hexPosition = ( hexagons[hexId] ).transform.position;
 
         foreach( Hexagon hexagon in hexagons.Values )
         {
-            if( insideRange )
-            { 
-                if( Vector3.Distance( hexPosition, hexagon.transform.position ) < range )
+            if( !hexagon.isOccupied && !hexagon.isObstructed )
+            {
+                if( insideRange )
+                { 
+                    if( Vector3.Distance( hexPosition, hexagon.transform.position ) < distance )
+                    {
+                        if( !hexagon.id.Equals( hexId ) )
+                        {
+                            idList.Add( hexagon.id );
+                        }
+                    }
+                }
+                else
                 {
-                    if( !hexagon.id.Equals( hexId ) )
+                    if( Vector3.Distance( hexPosition, hexagon.transform.position ) > distance )
                     {
                         idList.Add( hexagon.id );
                     }
-                }
-            }
-            else
-            {
-                if( Vector3.Distance( hexPosition, hexagon.transform.position ) > range )
-                {
-                    idList.Add( hexagon.id );
                 }
             }
         }
@@ -337,18 +357,6 @@ public class ApplicationManager : MonoBehaviour
         Application.Quit();
     }
 
-    public void initializeHexGrid( ref GameObject hexGrid )
-    {
-        hexagons = new Dictionary<string, Hexagon>();
-
-        Component[] hexArray = hexGrid.GetComponentsInChildren( typeof( Hexagon ) );
-
-        foreach( Hexagon hexagon in hexArray )
-        {
-            hexagons.Add( hexagon.id, hexagon );
-        }
-    }
-
     public void highlightHex( string hexId )
     {
         if( hexId != null )
@@ -375,6 +383,18 @@ public class ApplicationManager : MonoBehaviour
             {
                 // log debug message
             }
+        }
+    }
+
+    public void initializeHexGrid( ref GameObject hexGrid )
+    {
+        hexagons = new Dictionary<string, Hexagon>();
+
+        Component[] hexArray = hexGrid.GetComponentsInChildren( typeof( Hexagon ) );
+
+        foreach( Hexagon hexagon in hexArray )
+        {
+            hexagons.Add( hexagon.id, hexagon );
         }
     }
     
@@ -414,9 +434,6 @@ public class ApplicationManager : MonoBehaviour
         
         occupyHex( hexId );
         player.currrentHexId = hexId;
-
-        // Testing
-        highlightHexes( getHexRangeGroupIds( hexId, 1, false ) );
     }
 
     public void rotatePlayerToken( int direction )
