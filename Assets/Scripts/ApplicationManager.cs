@@ -28,6 +28,9 @@ public class ApplicationManager : MonoBehaviour
 
     [HideInInspector]
     public ArrayList roundOrder;
+
+    [HideInInspector]
+    public bool newGameStarted;
     
     [HideInInspector]
     public bool playerHasAdvantage;
@@ -70,6 +73,7 @@ public class ApplicationManager : MonoBehaviour
         player = new Player( statDefaultValue, statMinValue, statMaxValue, playerStartingPoints, 0 );
         opponents = new ArrayList();
         roundOrder = new ArrayList();
+        newGameStarted = false;
         playerHasAdvantage = true;
         round = 1;
 	}
@@ -112,77 +116,86 @@ public class ApplicationManager : MonoBehaviour
 
     void createTokens()
     {
-        tokens = new ArrayList();
-
-        tokens.Insert( player.id, Instantiate<GameObject>( playerToken ).gameObject );
-
-        foreach( Opponent opponent in opponents )
+        if( newGameStarted )
         {
-            tokens.Insert( opponent.id, Instantiate<GameObject>( opponentToken ).gameObject );
-        }
+            tokens = new ArrayList();
 
-        foreach( GameObject token in tokens )
-        {
-            token.SetActive( false );
+            tokens.Insert( player.id, Instantiate<GameObject>( playerToken ).gameObject );
+
+            foreach( Opponent opponent in opponents )
+            {
+                tokens.Insert( opponent.id, Instantiate<GameObject>( opponentToken ).gameObject );
+            }
+
+            foreach( GameObject token in tokens )
+            {
+                token.SetActive( false );
+            }
         }
     }
 
     void determineInitiative()
     {
-        roundOrder.Clear();
-
-        int[] ids = new int[round + 1];
-        float[] initiatives = new float[round + 1];
-
-        ids[0] = player.id;
-        initiatives[0] = player.getInitiative();
-
-        foreach( Opponent opponent in opponents )
+        if( newGameStarted )
         {
-            ids[opponent.id] = opponent.id;
-            initiatives[opponent.id] = opponent.getInitiative();
-        }
+            roundOrder.Clear();
 
-        int tempId = 0;
-        float tempInitiative = 0;
+            int[] ids = new int[round + 1];
+            float[] initiatives = new float[round + 1];
 
-        for( int i = round; i > -1; i -- )
-        {
-            for( int j = round - 1; j > -1; j -- )
+            ids[0] = player.id;
+            initiatives[0] = player.getInitiative();
+
+            foreach( Opponent opponent in opponents )
             {
-                if( initiatives[j + 1] < initiatives[j] )
-                {
-                    tempId = ids[j + 1];
-                    ids[j + 1] = ids[j];
-                    ids[j] = tempId;
+                ids[opponent.id] = opponent.id;
+                initiatives[opponent.id] = opponent.getInitiative();
+            }
 
-                    tempInitiative = initiatives[j + 1];
-                    initiatives[j + 1] = initiatives[j];
-                    initiatives[j] = tempInitiative;
+            int tempId = 0;
+            float tempInitiative = 0;
+
+            for( int i = round; i > -1; i -- )
+            {
+                for( int j = round - 1; j > -1; j -- )
+                {
+                    if( initiatives[j + 1] < initiatives[j] )
+                    {
+                        tempId = ids[j + 1];
+                        ids[j + 1] = ids[j];
+                        ids[j] = tempId;
+
+                        tempInitiative = initiatives[j + 1];
+                        initiatives[j + 1] = initiatives[j];
+                        initiatives[j] = tempInitiative;
+                    }
                 }
             }
-        }
 
-        for( int i = 0; i <= round; i ++ )
-        {
-            roundOrder.Insert( i, ids[i] );
-        }
+            for( int i = 0; i <= round; i ++ )
+            {
+                roundOrder.Insert( i, ids[i] );
+            }
 
-        roundOrder.Reverse();
+            roundOrder.Reverse();
+        }
     }
 
     void determineTacticalAdvantage()
     {
-        playerHasAdvantage = true;
-
-        int playerResult = statCheck( player.brains );
-
-        foreach( Opponent opponent in opponents )
+        if( newGameStarted )
         {
-            if( statCheck( opponent.brains ) > playerResult )
+            playerHasAdvantage = true;
+
+            int playerResult = statCheck( player.brains );
+
+            foreach( Opponent opponent in opponents )
             {
-                playerHasAdvantage = false;
-                break;
+                if( statCheck( opponent.brains ) > playerResult )
+                {
+                    playerHasAdvantage = false;
+                    break;
+                }
             }
         }
     }
@@ -203,10 +216,7 @@ public class ApplicationManager : MonoBehaviour
                 { 
                     if( Vector3.Distance( hexPosition, hexagon.transform.position ) < distance )
                     {
-                        if( !hexagon.id.Equals( hexId ) )
-                        {
-                            idList.Add( hexagon.id );
-                        }
+                        idList.Add( hexagon.id );
                     }
                 }
                 else
@@ -230,11 +240,14 @@ public class ApplicationManager : MonoBehaviour
 
     void generateOpponents()
     {
-        opponents.Clear();
-
-        for( int i = 0; i < round; i ++ )
+        if( newGameStarted )
         {
-            opponents.Insert( i, new Opponent( statDefaultValue, statMinValue, statMaxValue, opponentStartingPoints, i + 1 ) );
+            opponents.Clear();
+
+            for( int i = 0; i < round; i ++ )
+            {
+                opponents.Insert( i, new Opponent( statDefaultValue, statMinValue, statMaxValue, opponentStartingPoints, i + 1 ) );
+            }
         }
     }
 
@@ -290,15 +303,18 @@ public class ApplicationManager : MonoBehaviour
 
     void placeTokens()
     {
-        if( playerHasAdvantage )
+        if( newGameStarted )
         {
-            placeOpponents();
-            unlockHexGrid();
-        }
-        else
-        {
-            unlockHexGrid();
-            placeOpponents();
+            if( playerHasAdvantage )
+            {
+                placeOpponents();
+            }
+            else
+            {
+                // placing of opponents will wait until begin button clicked
+            }
+
+            newGameStarted = false;
         }
     }
 
@@ -306,14 +322,6 @@ public class ApplicationManager : MonoBehaviour
     {
         // Success is defined as a "roll" that is less than or equal to the stat
         return ( statValue - getDiceRoll() );
-    }
-
-    void unlockHexGrid()
-    {
-        foreach( Hexagon hexagon in hexagons.Values )
-        {
-            hexagon.isSelectable = true;
-        }
     }
 
     public void changeScreen()
@@ -397,6 +405,14 @@ public class ApplicationManager : MonoBehaviour
             hexagons.Add( hexagon.id, hexagon );
         }
     }
+
+    public void lockHexGrid()
+    {
+        foreach( Hexagon hexagon in hexagons.Values )
+        {
+            hexagon.isSelectable = false;
+        }
+    }
     
     public void obstructHex( string hexId )
     {
@@ -434,6 +450,8 @@ public class ApplicationManager : MonoBehaviour
         
         occupyHex( hexId );
         player.currrentHexId = hexId;
+
+        highlightHexes( getAvailableHexIds( hexId, 2, false ) );
     }
 
     public void rotatePlayerToken( int direction )
@@ -463,5 +481,13 @@ public class ApplicationManager : MonoBehaviour
     public void toggleSfx( bool sfxState )
     {
         sfxOn = sfxState;
+    }
+
+    public void unlockHexGrid()
+    {
+        foreach( Hexagon hexagon in hexagons.Values )
+        {
+            hexagon.isSelectable = true;
+        }
     }
 }

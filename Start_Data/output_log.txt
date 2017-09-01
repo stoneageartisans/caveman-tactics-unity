@@ -19,63 +19,41 @@ Platform assembly: E:\projects\unity\Caveman-Tactics\Start_Data\Managed\UnityEng
 Loading E:\projects\unity\Caveman-Tactics\Start_Data\Managed\UnityEngine.Timeline.dll into Unity Child Domain
 Platform assembly: E:\projects\unity\Caveman-Tactics\Start_Data\Managed\System.dll (this message is harmless)
 Platform assembly: E:\projects\unity\Caveman-Tactics\Start_Data\Managed\System.Core.dll (this message is harmless)
-- Completed reload, in  0.029 seconds
+- Completed reload, in  0.023 seconds
 <RI> Initializing input.
 <RI> Input initialized.
 <RI> Initialized touch support.
-UnloadTime: 1.879789 ms
+UnloadTime: 1.949098 ms
 Setting up 2 worker threads for Enlighten.
-  Thread -> id: 1404 -> priority: 1 
-  Thread -> id: 13e0 -> priority: 1 
+  Thread -> id: d60 -> priority: 1 
+  Thread -> id: d4c -> priority: 1 
 Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.452203 ms
+UnloadTime: 0.434180 ms
 
 Unloading 7 unused Assets to reduce memory usage. Loaded Objects now: 327.
-Total: 0.267828 ms (FindLiveObjects: 0.029666 ms CreateObjectMapping: 0.016080 ms MarkObjects: 0.196296 ms  DeleteObjects: 0.024675 ms)
+Total: 0.288621 ms (FindLiveObjects: 0.029666 ms CreateObjectMapping: 0.014417 ms MarkObjects: 0.211545 ms  DeleteObjects: 0.031884 ms)
 
 Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 11.335296 ms
+UnloadTime: 7.289017 ms
 
 Unloading 3 unused Assets to reduce memory usage. Loaded Objects now: 392.
-Total: 0.534270 ms (FindLiveObjects: 0.051014 ms CreateObjectMapping: 0.025507 ms MarkObjects: 0.441112 ms  DeleteObjects: 0.014694 ms)
+Total: 0.402850 ms (FindLiveObjects: 0.038815 ms CreateObjectMapping: 0.017189 ms MarkObjects: 0.334091 ms  DeleteObjects: 0.011367 ms)
 
 Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.704227 ms
+UnloadTime: 0.567262 ms
 
 Unloading 3 unused Assets to reduce memory usage. Loaded Objects now: 496.
-Total: 0.784631 ms (FindLiveObjects: 0.062659 ms CreateObjectMapping: 0.027725 ms MarkObjects: 0.677334 ms  DeleteObjects: 0.015526 ms)
+Total: 0.624931 ms (FindLiveObjects: 0.050460 ms CreateObjectMapping: 0.022180 ms MarkObjects: 0.537041 ms  DeleteObjects: 0.014139 ms)
 
 Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 1.489691 ms
+UnloadTime: 1.271211 ms
 
-Unloading 5 unused Assets to reduce memory usage. Loaded Objects now: 772.
-Total: 0.903019 ms (FindLiveObjects: 0.101198 ms CreateObjectMapping: 0.037152 ms MarkObjects: 0.733616 ms  DeleteObjects: 0.029389 ms)
+Unloading 5 unused Assets to reduce memory usage. Loaded Objects now: 771.
+Total: 0.899135 ms (FindLiveObjects: 0.109238 ms CreateObjectMapping: 0.036874 ms MarkObjects: 0.671232 ms  DeleteObjects: 0.079849 ms)
 
-Player token placed at (4.4, 0.0, 0.0)
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 1.603639 ms
 
-Player token placed at (3.7, 1.2, 0.0)
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
-Player token placed at (3.0, 2.5, 0.0)
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
-Player token placed at (1.6, 2.5, 0.0)
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
-Player token placed at (0.1, 2.5, 0.0)
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
-Player token placed at (3.7, 1.2, 0.0)
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
-Player token placed at (4.4, 0.0, 0.0)
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+Unloading 18 unused Assets to reduce memory usage. Loaded Objects now: 441.
+Total: 0.654597 ms (FindLiveObjects: 0.069313 ms CreateObjectMapping: 0.028834 ms MarkObjects: 0.501830 ms  DeleteObjects: 0.053510 ms)
 

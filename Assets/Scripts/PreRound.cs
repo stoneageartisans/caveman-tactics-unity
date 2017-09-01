@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class PreRound : MonoBehaviour
 {
+    public Button gotItButton;
     public GameObject hexGrid;
     public GameObject instructionDialog;
     public Text actionPoints;
@@ -17,8 +18,6 @@ public class PreRound : MonoBehaviour
     public Text stamina;
     public Text unspentPoints;
     public Text weapon;
-
-    bool dialogShowing;
 
 	void Start()
     {
@@ -33,21 +32,13 @@ public class PreRound : MonoBehaviour
         damage.text = ( ApplicationManager.instance.player.getDamageMin() + " - " + ApplicationManager.instance.player.getDamageMax() );
         unspentPoints.text = ApplicationManager.instance.player.unspentPoints.ToString();
 
-        ApplicationManager.instance.initializeHexGrid( ref hexGrid );
-        ApplicationManager.instance.checkAppState();
-
-        showInstructionDialog();
-	}
-	
-	void Update()
-    {
-        if( dialogShowing )
+        if( ApplicationManager.instance.newGameStarted )
         {
-            if( Input.anyKeyDown )
-            {
-                hideInstructionDialog();
-            }
+            ApplicationManager.instance.initializeHexGrid( ref hexGrid );
+            showInstructionDialog();
         }
+
+        ApplicationManager.instance.checkAppState();
 	}
 
     string formatActionPoints()
@@ -72,20 +63,25 @@ public class PreRound : MonoBehaviour
     {
         instructionDialog.SetActive( false );
 
-        dialogShowing = false;
+        ApplicationManager.instance.unlockHexGrid();
     }
 
     void showInstructionDialog()
     {
-        instructionDialog.SetActive( true );
+        ApplicationManager.instance.lockHexGrid();
 
-        dialogShowing = true;
+        instructionDialog.SetActive( true );
     }
 
     public void characterButtonClicked()
     {
         ApplicationManager.instance.appState = Constants.AppState.Character;
         ApplicationManager.instance.changeScreen();
+    }
+
+    public void gotItButtonClicked()
+    {
+        hideInstructionDialog();
     }
 
     public void menuButtonClicked()

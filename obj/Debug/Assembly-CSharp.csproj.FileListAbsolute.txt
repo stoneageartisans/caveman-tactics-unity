@@ -30,8 +30,6 @@ E:\projects\unity\Final-Project\Temp\bin\Debug\UnityEngine.HoloLens.xml
 E:\projects\unity\Final-Project\obj\Debug\Assembly-CSharp.csprojResolveAssemblyReference.cache
 E:\projects\unity\Final-Project\obj\Debug\Assembly-CSharp.dll
 E:\projects\unity\Final-Project\obj\Debug\Assembly-CSharp.pdb
-E:\projects\unity\Caveman-Tactics\obj\Debug\Assembly-CSharp.csprojResolveAssemblyReference.cache
-E:\projects\unity\Caveman-Tactics\obj\Debug\Assembly-CSharp.dll
 E:\projects\unity\Caveman-Tactics\Temp\bin\Debug\Assembly-CSharp.dll
 E:\projects\unity\Caveman-Tactics\Temp\bin\Debug\Assembly-CSharp.pdb
 E:\projects\unity\Caveman-Tactics\Temp\bin\Debug\nunit.framework.dll
@@ -61,4 +59,6 @@ E:\projects\unity\Caveman-Tactics\Temp\bin\Debug\nunit.framework.xml
 E:\projects\unity\Caveman-Tactics\Temp\bin\Debug\UnityEngine.Timeline.xml
 E:\projects\unity\Caveman-Tactics\Temp\bin\Debug\UnityEngine.Analytics.xml
 E:\projects\unity\Caveman-Tactics\Temp\bin\Debug\UnityEngine.HoloLens.xml
+E:\projects\unity\Caveman-Tactics\obj\Debug\Assembly-CSharp.csprojResolveAssemblyReference.cache
+E:\projects\unity\Caveman-Tactics\obj\Debug\Assembly-CSharp.dll
 E:\projects\unity\Caveman-Tactics\obj\Debug\Assembly-CSharp.pdb
