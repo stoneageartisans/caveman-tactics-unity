@@ -73,7 +73,7 @@ PlayerSettings:
   Force IOS Speakers When Recording: 0
   submitAnalytics: 1
   usePlayerLog: 1
-  bakeCollisionMeshes: 0
+  bakeCollisionMeshes: 1
   forceSingleInstance: 0
   resizableWindow: 0
   useMacAppStoreValidation: 0
@@ -122,7 +122,17 @@ PlayerSettings:
     16:9: 1
     Others: 1
   bundleVersion: 1.0
-  preloadedAssets: []
+  preloadedAssets:
+  - {fileID: 1605561436390388, guid: 87fca64521d0902499aec5e3716b2f0c, type: 2}
+  - {fileID: 1323250066803806, guid: 10ef623498eab4840986d33683ea42cb, type: 2}
+  - {fileID: 2100000, guid: 288d73777758c8e45a4658b3a019fa14, type: 2}
+  - {fileID: 2100000, guid: 77e0bba897881454282fdeb23b599f45, type: 2}
+  - {fileID: 1077265697449128, guid: 61179de41f9c46541a09769a877ad89d, type: 2}
+  - {fileID: 1134369820551364, guid: 5a426b6bee0238d4b94409c239ba4f14, type: 2}
+  - {fileID: 1948341962684970, guid: 443276cf650353c448d49fa0d2e92b66, type: 2}
+  - {fileID: 12800000, guid: dbc5ebf0f85b95641ba810555dc341f3, type: 3}
+  - {fileID: 12800000, guid: b13c2c41a45054a42b53dac05e4af238, type: 3}
+  - {fileID: 8300000, guid: 5a592a1343002864a8be3cff5ab3402c, type: 3}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -162,7 +172,7 @@ PlayerSettings:
   ForceSDCardPermission: 0
   CreateWallpaper: 0
   APKExpansionFiles: 0
-  keepLoadedShadersAlive: 0
+  keepLoadedShadersAlive: 1
   StripUnusedMeshComponents: 0
   VertexChannelCompressionMask:
     serializedVersion: 2

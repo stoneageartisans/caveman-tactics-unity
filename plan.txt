@@ -1,8 +1,5 @@
 - Implement placing of opponent token based on tacticalStance
 
-- IMPORTANT: When startRound button is clicked in PreRound scene,
-  set player's stat min values to current stat values  
-
 - Camera z based on screen aspect
 
   - 16:9   -8.66

@@ -94,4 +94,9 @@ public class PreRound : MonoBehaviour
         ApplicationManager.instance.appState = Constants.AppState.MainMenu;
         ApplicationManager.instance.changeScreen();
     }
+
+    public void readyButtonClicked()
+    {
+        ApplicationManager.instance.beginRound();
+    }
 }

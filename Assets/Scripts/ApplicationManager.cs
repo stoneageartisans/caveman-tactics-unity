@@ -81,18 +81,35 @@ public class ApplicationManager : MonoBehaviour
     {
         // TODO
 	}
+
+    public void beginRound()
+    {
+        lockHexGrid();
+
+        lockPlayerStatMinimums();
+
+        if(!playerHasAdvantage)
+        {
+            placeOpponents();
+        }
+
+        //resumeState = Constants.AppState.AiTurn OR Constants.AppState.PlayerTurn
+        //appState = Constants.AppState.AiTurn OR Constants.AppState.PlayerTurn
+
+        //changeScreen();
+    }
     
     void clearHex(string hexId)
     {
         if(hexId != null)
         {
-            (hexagons[hexId]).isObstructed = false;
-            (hexagons[hexId]).isOccupied = false;
-            (hexagons[hexId]).setOverlay(Constants.HexOverlay.Blank);
+            ( hexagons[hexId] ).isObstructed = false;
+            ( hexagons[hexId] ).isOccupied = false;
+            ( hexagons[hexId] ).setOverlay(Constants.HexOverlay.Blank);
         }
         else
         {
-            // log debug message
+            Debug.Log("ERROR: The hex Id is null");
         }
     }
 
@@ -102,13 +119,13 @@ public class ApplicationManager : MonoBehaviour
         {
             if(hexId != null)
             {
-                (hexagons[hexId]).isObstructed = false;
-                (hexagons[hexId]).isOccupied = false;
-                (hexagons[hexId]).setOverlay(Constants.HexOverlay.Blank);
+                ( hexagons[hexId] ).isObstructed = false;
+                ( hexagons[hexId] ).isOccupied = false;
+                ( hexagons[hexId] ).setOverlay(Constants.HexOverlay.Blank);
             }
             else
             {
-                // log debug message
+                Debug.Log("ERROR: The hex Id is null");
             }
         }
     }
@@ -253,7 +270,15 @@ public class ApplicationManager : MonoBehaviour
         return (die1 + die2);
     }
 
-    void placeOpponents()
+    void lockPlayerStatMinimums()
+    {
+        player.brawnMin = player.brawn;
+        player.agilityMin = player.agility;
+        player.brainsMin = player.brains;
+        player.staminaMin = player.stamina;
+    }
+
+    public void placeOpponents()
     {
         if(playerHasAdvantage)
         {
