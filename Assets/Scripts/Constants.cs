@@ -47,6 +47,9 @@ public static class Constants
     public const int NORTHEAST      = 5;
     public const int MAX_DIRECTIONS = 6;
 
+    public const int LEFT_MOUSE = 0;
+    public const int RIGHT_MOUSE = 1;
+
     public static Quaternion[] FACING =
     {
         Quaternion.Euler( 0, 0,   0 ),
@@ -58,4 +61,5 @@ public static class Constants
     };
 
     public const float HEX_SPACING = 1.45F; // True spacing is 1.425, but it was rounded to avoid misses
+    public const float SPLASH_DELAY = 2.5F;
 }

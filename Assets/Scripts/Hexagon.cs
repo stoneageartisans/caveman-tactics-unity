@@ -40,28 +40,36 @@ public class Hexagon : MonoBehaviour
 
     void OnMouseOver()
     {
-        if( isSelectable )
+        if(isSelectable)
         {
-            if( Input.GetMouseButtonDown( 0 ) )
+            if( Input.GetMouseButtonDown(Constants.LEFT_MOUSE) )
             {
-                if( !isOccupied )
+                if(!isOccupied)
                 {
-                    ApplicationManager.instance.placePlayerToken( gameObject.transform.position, id );
+                    ApplicationManager.instance.placePlayerToken(gameObject.transform.position, id);
+
+                    if(ApplicationManager.instance.newGameStarted)
+                    {
+                        ApplicationManager.instance.newGameStarted = false;
+                    }
                 }
             }
 
-            if( Input.GetMouseButtonDown( 1 ) )
+            if( Input.GetMouseButtonDown(Constants.RIGHT_MOUSE) )
             {
-                int direction = ApplicationManager.instance.player.facing;
-
-                direction ++;
-
-                if( direction == Constants.MAX_DIRECTIONS )
+                if(isOccupied)
                 {
-                    direction = Constants.EAST;
-                }
+                    int direction = ApplicationManager.instance.player.facing;
 
-                ApplicationManager.instance.rotatePlayerToken( direction );
+                    direction ++;
+
+                    if(direction == Constants.MAX_DIRECTIONS)
+                    {
+                        direction = Constants.EAST;
+                    }
+
+                    ApplicationManager.instance.rotatePlayerToken(direction);
+                }
             }
         }
 
@@ -69,7 +77,7 @@ public class Hexagon : MonoBehaviour
 
     void Awake()
     {
-        id = ( column + "," + row );
+        id = (column + "," + row);
     }
 
 	void Start()
@@ -82,25 +90,25 @@ public class Hexagon : MonoBehaviour
         // TODO
 	}
 
-    int getDirection( float angle )
+    int getDirection(float angle)
     {
-        if( angle > 30 && angle <= 90 )
+        if(angle > 30 && angle <= 90)
         {
             return Constants.SOUTHEAST;
         }
-        else if( angle > 90 && angle <= 150 )
+        else if(angle > 90 && angle <= 150)
         {
             return Constants.SOUTHEAST;
         }
-        else if( angle > 150 && angle <= 210 )
+        else if(angle > 150 && angle <= 210)
         {
             return Constants.SOUTHEAST;
         }
-        else if( angle > 150 && angle <= 210 )
+        else if(angle > 150 && angle <= 210)
         {
             return Constants.SOUTHEAST;
         }
-        else if( angle > 150 && angle <= 210 )
+        else if(angle > 150 && angle <= 210)
         {
             return Constants.SOUTHEAST;
         }
@@ -110,21 +118,21 @@ public class Hexagon : MonoBehaviour
         }
     }
     
-    public void setOverlay( Constants.HexOverlay overlay )
+    public void setOverlay(Constants.HexOverlay overlay)
     {
-        switch( overlay )
+        switch(overlay)
         {
             case Constants.HexOverlay.Blank:
-                currentMaterial.SetTexture( "_MainTex", blank );
+                currentMaterial.SetTexture("_MainTex", blank);
                 break;
             case Constants.HexOverlay.Highlighted:
-                currentMaterial.SetTexture( "_MainTex", highlighted );
+                currentMaterial.SetTexture("_MainTex", highlighted);
                 break;
             case Constants.HexOverlay.Obstructed:
-                currentMaterial.SetTexture( "_MainTex", obstructed );
+                currentMaterial.SetTexture("_MainTex", obstructed);
                 break;
             default:
-                currentMaterial.SetTexture( "_MainTex", blank );
+                currentMaterial.SetTexture("_MainTex", blank);
                 break;
         }
     }

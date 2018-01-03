@@ -32,10 +32,15 @@ public class PreRound : MonoBehaviour
         damage.text = ( ApplicationManager.instance.player.getDamageMin() + " - " + ApplicationManager.instance.player.getDamageMax() );
         unspentPoints.text = ApplicationManager.instance.player.unspentPoints.ToString();
 
-        if( ApplicationManager.instance.newGameStarted )
+        ApplicationManager.instance.initializeHexGrid(ref hexGrid);
+
+        if(ApplicationManager.instance.newGameStarted)
         {
-            ApplicationManager.instance.initializeHexGrid( ref hexGrid );
             showInstructionDialog();
+        }
+        else
+        {
+            ApplicationManager.instance.unlockHexGrid();
         }
 
         ApplicationManager.instance.checkAppState();
@@ -61,7 +66,7 @@ public class PreRound : MonoBehaviour
 
     void hideInstructionDialog()
     {
-        instructionDialog.SetActive( false );
+        instructionDialog.SetActive(false);
 
         ApplicationManager.instance.unlockHexGrid();
     }
@@ -70,7 +75,7 @@ public class PreRound : MonoBehaviour
     {
         ApplicationManager.instance.lockHexGrid();
 
-        instructionDialog.SetActive( true );
+        instructionDialog.SetActive(true);
     }
 
     public void characterButtonClicked()

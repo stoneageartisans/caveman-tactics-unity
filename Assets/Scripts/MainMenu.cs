@@ -16,12 +16,12 @@ public class MainMenu : MonoBehaviour
 
     void hideConfirmDialog()
     {
-        confirmDialog.SetActive( false );
+        confirmDialog.SetActive(false);
     }
 
     void setResumeButtonState()
     {
-        if( ApplicationManager.instance.resumeState == Constants.AppState.MainMenu )
+        if(ApplicationManager.instance.resumeState == Constants.AppState.MainMenu)
         {
             resumeButton.interactable = false;
         }
@@ -33,7 +33,7 @@ public class MainMenu : MonoBehaviour
 
     void showConfirmDialog()
     {
-        confirmDialog.SetActive( true );
+        confirmDialog.SetActive(true);
     }
 
     public void cancelButtonClicked()
@@ -51,6 +51,7 @@ public class MainMenu : MonoBehaviour
     {
         hideConfirmDialog();
 
+        ApplicationManager.instance.reset();
         ApplicationManager.instance.newGameStarted = true;
         ApplicationManager.instance.resumeState = Constants.AppState.MainMenu;
         ApplicationManager.instance.appState = Constants.AppState.Character;

@@ -24,7 +24,7 @@ public class Player
     public int id;
 
     [HideInInspector]
-    public string currrentHexId;
+    public string currentHexId;
 
     [HideInInspector]
     public string previousHexId;
@@ -57,7 +57,7 @@ public class Player
         calculateStats();
 
         facing = Constants.EAST;
-        currrentHexId = null;
+        currentHexId = null;
         previousHexId = null;
     }
 
