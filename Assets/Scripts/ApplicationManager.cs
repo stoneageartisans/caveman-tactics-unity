@@ -24,9 +24,10 @@ public class ApplicationManager : MonoBehaviour
 
     [HideInInspector] public ArrayList opponents;
     [HideInInspector] public ArrayList roundOrder;
-    [HideInInspector] public bool newGameStarted;
+    [HideInInspector] public bool newRoundStarted;
     [HideInInspector] public bool opponentsPlaced;
-    [HideInInspector] public bool playerHasAdvantage;    
+    [HideInInspector] public bool playerHasAdvantage;
+    [HideInInspector] public bool playerPlaced;
     [HideInInspector] public Dictionary<string, Hexagon> hexagons;
     [HideInInspector] public int round;
     [HideInInspector] public Player player;
@@ -52,17 +53,25 @@ public class ApplicationManager : MonoBehaviour
     {
         Invoke("changeScreen", Constants.SPLASH_DELAY);
 
-        if(music != null)
+        loadPreferences();
+
+        if(musicOn)
         {
-            music.Play();
+            if(music != null)
+            {
+                music.Play();
+            }
         }
 
         player = new Player(statDefaultValue, statMinValue, statMaxValue, playerStartingPoints, 0);
         opponents = new ArrayList();
         roundOrder = new ArrayList();
-        newGameStarted = false;
+        newRoundStarted = false;
         opponentsPlaced = false;
+        playerPlaced = false;
         round = Constants.STARTING_ROUND;
+
+        loadGameProgress();
 
         initializeHexGrid();
 	}
@@ -75,8 +84,6 @@ public class ApplicationManager : MonoBehaviour
     public void beginRound()
     {
         lockHexGrid();
-
-        lockPlayerStatMinimums();
 
         if(!playerHasAdvantage)
         {
@@ -166,7 +173,7 @@ public class ApplicationManager : MonoBehaviour
 
     void determineInitiative()
     {
-        if(newGameStarted)
+        if(newRoundStarted)
         {
             roundOrder.Clear();
 
@@ -213,7 +220,7 @@ public class ApplicationManager : MonoBehaviour
 
     void determineTacticalAdvantage()
     {
-        if(newGameStarted)
+        if(newRoundStarted)
         {
             playerHasAdvantage = true;
 
@@ -237,7 +244,7 @@ public class ApplicationManager : MonoBehaviour
         
     void generateOpponents()
     {
-        if(newGameStarted)
+        if(newRoundStarted)
         {
             opponents.Clear();
 
@@ -272,8 +279,6 @@ public class ApplicationManager : MonoBehaviour
         {
             angle += 360;
         }
-
-        Debug.Log("Result of getAngleToHexagon(" + currentHexId + ", " + targetHexId + ") is " + angle);
 
         return angle;
     }
@@ -407,6 +412,69 @@ public class ApplicationManager : MonoBehaviour
         }
     }
 
+    void loadGameProgress()
+    {
+        if(PlayerPrefs.GetInt("canResume", 0) != 0)
+        {
+            player.agility = PlayerPrefs.GetInt("agility", statDefaultValue);
+            player.agilityMin = PlayerPrefs.GetInt("agilityMin", statMinValue);
+            player.brains = PlayerPrefs.GetInt("brains", statDefaultValue);
+            player.brainsMin = PlayerPrefs.GetInt("brainsMin", statMinValue);
+            player.brawn = PlayerPrefs.GetInt("brawn", statDefaultValue);
+            player.brawnMin = PlayerPrefs.GetInt("brawnMin", statMinValue);
+            player.stamina = PlayerPrefs.GetInt("stamina", statDefaultValue);
+            player.staminaMin = PlayerPrefs.GetInt("staminaMin", statMinValue);
+            player.unspentPoints = PlayerPrefs.GetInt("unspentPoints", playerStartingPoints);
+            round = PlayerPrefs.GetInt("round", Constants.STARTING_ROUND);
+        }
+    }
+
+    void loadPreferences()
+    {
+        bool needsSave = false;
+
+        // Music On/Off Setting
+        if(PlayerPrefs.HasKey("musicOn"))
+        {
+            if(PlayerPrefs.GetInt("musicOn") == 0)
+            {
+                musicOn = false;
+            }
+            else
+            {
+                musicOn = true;
+            }
+        }
+        else // Create the setting and save it
+        {
+            PlayerPrefs.SetInt("musicOn", 1);
+            needsSave = true;
+        }
+
+        // SFX On/Off Setting
+        if(PlayerPrefs.HasKey("sfxOn"))
+        {
+            if(PlayerPrefs.GetInt("sfxOn") == 0)
+            {
+                sfxOn = false;
+            }
+            else
+            {
+                sfxOn = true;
+            }
+        }
+        else // Create the setting and save it
+        {
+            PlayerPrefs.SetInt("sfxOn", 1);
+            needsSave = true;
+        }
+
+        if(needsSave)
+        {
+            PlayerPrefs.Save();
+        }
+    }
+
     public void lockHexGrid()
     {
         foreach(Hexagon hexagon in hexagons.Values)
@@ -415,7 +483,7 @@ public class ApplicationManager : MonoBehaviour
         }
     }
 
-    void lockPlayerStatMinimums()
+    public void lockPlayerStatMinimums()
     {
         player.brawnMin = player.brawn;
         player.agilityMin = player.agility;
@@ -455,6 +523,7 @@ public class ApplicationManager : MonoBehaviour
             foreach(Opponent opponent in opponents)
             {
                 placeOpponentToken(opponent.currentHexId, opponent);
+                rotateOpponentToken(opponent.facing, opponent);
             }
         }
         else
@@ -466,8 +535,6 @@ public class ApplicationManager : MonoBehaviour
             {
                 foreach(Opponent opponent in opponents)
                 {
-                    Debug.Log( "Tactical Stance: " + opponent.tacticalStance.ToString() );
-
                     switch(opponent.tacticalStance)
                     {
                         case Constants.TacticalStance.Aggressive:
@@ -487,8 +554,6 @@ public class ApplicationManager : MonoBehaviour
                             break;
                     }
 
-                    Debug.Log("Direction is " + direction);
-
                     placeOpponentToken(hexId, opponent);
                     rotateOpponentToken(direction, opponent);
                 }
@@ -497,8 +562,6 @@ public class ApplicationManager : MonoBehaviour
             {
                 foreach(Opponent opponent in opponents)
                 {
-                    Debug.Log( "Tactical Stance: " + opponent.tacticalStance.ToString() );
-
                     switch(opponent.tacticalStance)
                     {
                         case Constants.TacticalStance.Aggressive:
@@ -517,8 +580,6 @@ public class ApplicationManager : MonoBehaviour
                             direction = getDirection( getAngleToHexagon( hexId, player.currentHexId ) );
                             break;
                     }
-
-                    Debug.Log("Direction is " + direction);
 
                     placeOpponentToken(hexId, opponent);
                     rotateOpponentToken(direction, opponent);
@@ -563,11 +624,12 @@ public class ApplicationManager : MonoBehaviour
 
     void placeTokens()
     {
-        if(newGameStarted)
+        if(newRoundStarted)
         {
             if(playerHasAdvantage)
             {
                 placeOpponents();
+                newRoundStarted = false;
             }
             else
             {
@@ -576,8 +638,11 @@ public class ApplicationManager : MonoBehaviour
         }
         else
         {
-            placePlayerToken(player.currentHexId);
-            rotatePlayerToken(player.facing);
+            if(playerPlaced)
+            {
+                placePlayerToken(player.currentHexId);
+                rotatePlayerToken(player.facing);
+            }
 
             if(opponentsPlaced)
             {
@@ -595,8 +660,9 @@ public class ApplicationManager : MonoBehaviour
         player = new Player(statDefaultValue, statMinValue, statMaxValue, playerStartingPoints, 0);
         opponents = new ArrayList();
         roundOrder = new ArrayList();
-        newGameStarted = false;
+        newRoundStarted = false;
         opponentsPlaced = false;
+        playerPlaced = false;
         round = Constants.STARTING_ROUND;
         resumeState = Constants.AppState.MainMenu;
         clearHexGrid();
@@ -616,6 +682,21 @@ public class ApplicationManager : MonoBehaviour
         ( (GameObject) tokens[opponent.id] ).transform.rotation = Constants.FACING[opponent.facing];
     }
 
+    void saveGameProgress()
+    {
+        PlayerPrefs.SetInt("agility", player.agility);
+        PlayerPrefs.SetInt("agilityMin", player.agilityMin);
+        PlayerPrefs.SetInt("brains", player.brains);
+        PlayerPrefs.SetInt("brainsMin", player.brainsMin);
+        PlayerPrefs.SetInt("brawn", player.brawn);
+        PlayerPrefs.SetInt("brawnMin", player.brawnMin);
+        PlayerPrefs.SetInt("stamina", player.stamina);
+        PlayerPrefs.SetInt("staminaMin", player.staminaMin);
+        PlayerPrefs.SetInt("unspentPoints", player.unspentPoints);
+        PlayerPrefs.SetInt("round", round);
+        PlayerPrefs.SetInt("canResume", 1);
+    }
+
     int statCheck(int statValue)
     {
         // Success is defined as a "roll" that is less than or equal to the stat
@@ -631,10 +712,12 @@ public class ApplicationManager : MonoBehaviour
             if(musicOn)
             {
                 music.Play();
+                PlayerPrefs.SetInt("musicOn", 1);
             }
             else
             {
                 music.Pause();
+                PlayerPrefs.SetInt("musicOn", 0);
             }
         }
     }
@@ -642,6 +725,15 @@ public class ApplicationManager : MonoBehaviour
     public void toggleSfx(bool sfxState)
     {
         sfxOn = sfxState;
+
+        if(sfxOn)
+        {
+            PlayerPrefs.SetInt("sfxOn", 1);
+        }
+        else
+        {
+            PlayerPrefs.SetInt("sfxOn", 0);
+        }
     }
 
     public void unlockHexGrid()

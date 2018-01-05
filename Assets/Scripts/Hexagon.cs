@@ -48,10 +48,12 @@ public class Hexagon : MonoBehaviour
                 {
                     ApplicationManager.instance.placePlayerToken(id);
 
-                    if(ApplicationManager.instance.newGameStarted)
+                    if(ApplicationManager.instance.newRoundStarted)
                     {
-                        ApplicationManager.instance.newGameStarted = false;
+                        ApplicationManager.instance.newRoundStarted = false;
                     }
+
+                    ApplicationManager.instance.playerPlaced = true;
                 }
             }
 

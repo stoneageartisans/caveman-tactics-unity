@@ -52,7 +52,7 @@ public class MainMenu : MonoBehaviour
         hideConfirmDialog();
 
         ApplicationManager.instance.reset();
-        ApplicationManager.instance.newGameStarted = true;
+        ApplicationManager.instance.newRoundStarted = true;
         ApplicationManager.instance.resumeState = Constants.AppState.MainMenu;
         ApplicationManager.instance.appState = Constants.AppState.Character;
         ApplicationManager.instance.changeScreen();
@@ -78,7 +78,7 @@ public class MainMenu : MonoBehaviour
         }
         else
         {
-            ApplicationManager.instance.newGameStarted = true;
+            ApplicationManager.instance.newRoundStarted = true;
             ApplicationManager.instance.appState = Constants.AppState.Character;
             ApplicationManager.instance.changeScreen();
         }

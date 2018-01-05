@@ -26,6 +26,7 @@ public class Settings : MonoBehaviour
 
     public void okButtonClicked()
     {
+        PlayerPrefs.Save();
         ApplicationManager.instance.appState = Constants.AppState.MainMenu;
         ApplicationManager.instance.changeScreen();
     }

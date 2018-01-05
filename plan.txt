@@ -1,4 +1,4 @@
-- Remove option to return to Character screen from PreRound. Remember to set minimum stats to current stats whene PreRound is loaded.
+- Add a label and value for round to PreRound scene. Adjust GUI elements
 
 - Camera z based on screen aspect
 

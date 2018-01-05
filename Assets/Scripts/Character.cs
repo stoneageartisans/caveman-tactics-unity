@@ -101,41 +101,16 @@ public class Character : MonoBehaviour
 
     public void acceptButtonClicked()
     {
-        switch( ApplicationManager.instance.resumeState )
-        {
-            case Constants.AppState.MainMenu:
-                ApplicationManager.instance.resumeState = Constants.AppState.PreRound;
-                ApplicationManager.instance.appState = Constants.AppState.PreRound;
-                break;
-            case Constants.AppState.PreRound:
-                ApplicationManager.instance.appState = Constants.AppState.PreRound;
-                break;
-            case Constants.AppState.PostRound:
-                ApplicationManager.instance.appState = Constants.AppState.PostRound;
-                break;
-        }
-
+        ApplicationManager.instance.lockPlayerStatMinimums();
+        ApplicationManager.instance.resumeState = Constants.AppState.PreRound;
+        ApplicationManager.instance.appState = Constants.AppState.PreRound;
         ApplicationManager.instance.changeScreen();
     }
 
     public void cancelButtonClicked()
     {
-        undoChanges();
-
-        switch( ApplicationManager.instance.resumeState )
-        {
-            case Constants.AppState.MainMenu:
-                ApplicationManager.instance.resumeState = Constants.AppState.MainMenu;
-                ApplicationManager.instance.appState = Constants.AppState.MainMenu;
-                break;
-            case Constants.AppState.PreRound:
-                ApplicationManager.instance.appState = Constants.AppState.PreRound;
-                break;
-            case Constants.AppState.PostRound:
-                ApplicationManager.instance.appState = Constants.AppState.PostRound;
-                break;
-        }
-
+        ApplicationManager.instance.resumeState = Constants.AppState.MainMenu;
+        ApplicationManager.instance.appState = Constants.AppState.MainMenu;
         ApplicationManager.instance.changeScreen();
     }
 
