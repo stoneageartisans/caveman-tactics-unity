@@ -1,4 +1,4 @@
-- Implement placing of opponent token based on tacticalStance
+- Remove option to return to Character screen from PreRound. Remember to set minimum stats to current stats whene PreRound is loaded.
 
 - Camera z based on screen aspect
 
