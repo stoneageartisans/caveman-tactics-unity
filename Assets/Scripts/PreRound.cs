@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class PreRound : MonoBehaviour
 {
     public Button gotItButton;
-    public GameObject hexGrid;
     public GameObject instructionDialog;
     public Text actionPoints;
     public Text agility;
@@ -31,8 +30,6 @@ public class PreRound : MonoBehaviour
         weapon.text = ApplicationManager.instance.player.weapon.ToString();
         damage.text = ( ApplicationManager.instance.player.getDamageMin() + " - " + ApplicationManager.instance.player.getDamageMax() );
         unspentPoints.text = ApplicationManager.instance.player.unspentPoints.ToString();
-
-        ApplicationManager.instance.initializeHexGrid(ref hexGrid);
 
         if(ApplicationManager.instance.newGameStarted)
         {
@@ -80,6 +77,7 @@ public class PreRound : MonoBehaviour
 
     public void characterButtonClicked()
     {
+        ApplicationManager.instance.lockHexGrid();
         ApplicationManager.instance.appState = Constants.AppState.Character;
         ApplicationManager.instance.changeScreen();
     }
@@ -91,6 +89,7 @@ public class PreRound : MonoBehaviour
 
     public void menuButtonClicked()
     {
+        ApplicationManager.instance.lockHexGrid();
         ApplicationManager.instance.appState = Constants.AppState.MainMenu;
         ApplicationManager.instance.changeScreen();
     }

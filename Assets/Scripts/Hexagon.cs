@@ -46,7 +46,7 @@ public class Hexagon : MonoBehaviour
             {
                 if(!isOccupied)
                 {
-                    ApplicationManager.instance.placePlayerToken(gameObject.transform.position, id);
+                    ApplicationManager.instance.placePlayerToken(id);
 
                     if(ApplicationManager.instance.newGameStarted)
                     {
@@ -57,7 +57,7 @@ public class Hexagon : MonoBehaviour
 
             if( Input.GetMouseButtonDown(Constants.RIGHT_MOUSE) )
             {
-                if(isOccupied)
+                if( isOccupied && id.Equals(ApplicationManager.instance.player.currentHexId) )
                 {
                     int direction = ApplicationManager.instance.player.facing;
 
@@ -88,34 +88,6 @@ public class Hexagon : MonoBehaviour
     {
         // TODO
 	}
-
-    int getDirection(float angle)
-    {
-        if(angle > 30 && angle <= 90)
-        {
-            return Constants.SOUTHEAST;
-        }
-        else if(angle > 90 && angle <= 150)
-        {
-            return Constants.SOUTHEAST;
-        }
-        else if(angle > 150 && angle <= 210)
-        {
-            return Constants.SOUTHEAST;
-        }
-        else if(angle > 150 && angle <= 210)
-        {
-            return Constants.SOUTHEAST;
-        }
-        else if(angle > 150 && angle <= 210)
-        {
-            return Constants.SOUTHEAST;
-        }
-        else
-        {
-            return Constants.EAST;
-        }
-    }
     
     public void setOverlay(Constants.HexOverlay overlay)
     {
